@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://victorlepri.dev/sitemap.xml
