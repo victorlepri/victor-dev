@@ -1148,7 +1148,7 @@ function drawStoop(g, t, hot){
 }
 
 var uiT0 = performance.now();
-/* the name types itself top left, then the truth under it; the two truths trade places each pass */
+/* the name types itself top left, then the truth under it; one truth per visit */
 var BRAND = "VICTOR LEPRI";
 var TRUTHS = ["ART IS TECHNOLOGY", "TECHNOLOGY IS ART"];
 var truthIx = Math.random() < 0.5 ? 0 : 1;
@@ -1174,7 +1174,6 @@ var brandVis = [], sloganVis = [];
 var typeB = reduced ? BRAND.length : 0;
 var typeN = reduced ? SLOGAN.length : 0;
 var nextType = uiT0 + 900;
-var lastCyc = -1;
 /* the letters grieve on their own clock: same cycle, same ratio, new letters each pass */
 function sstep(a, b, x){ x = Math.min(Math.max((x - a)/(b - a), 0), 1); return x*x*(3 - 2*x); }
 function shash(i, s){ var v = Math.sin(i*127.1 + s*311.7)*43758.5453; return v - Math.floor(v); }
@@ -1204,14 +1203,6 @@ function uiFrame(){
   if(sloganSpans.length){
     var nt = (typeof bgT === "number") ? bgT : t;
     var cycIx = Math.floor(nt/18.0);
-    if(cycIx !== lastCyc){
-      if(lastCyc !== -1 && typeN >= SLOGAN.length){
-        truthIx = 1 - truthIx;
-        SLOGAN = TRUTHS[truthIx];
-        for(var si=0; si<sloganSpans.length; si++) sloganSpans[si].textContent = SLOGAN[si];
-      }
-      lastCyc = cycIx;
-    }
     var scyc = nt/18.0 - Math.floor(nt/18.0);
     var sero = sstep(0.80, 0.87, scyc)*(1.0 - sstep(0.90, 0.985, scyc));
     var salt = cycIx*31.0;
